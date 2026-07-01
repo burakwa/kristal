@@ -6,15 +6,15 @@ export default function SearchPanel() {
   const { colors } = useTheme();
   const [query, setQuery] = useState('');
   
-  // Arama filtreleri (VS Code'daki Aa, W, .* butonları)
+
   const [matchCase, setMatchCase] = useState(false);
   const [matchWholeWord, setMatchWholeWord] = useState(false);
   const [useRegex, setUseRegex] = useState(false);
 
   // Şimdilik sahte sonuçlar (İleride PDF'ten gerçek metin çekip burada filtreleyeceğiz)
   const mockResults = query ? [
-    { file: 'App.tsx', line: 12, text: `... const [${query}, set${query}] = useState ...` },
-    { file: 'App.tsx', line: 45, text: `... return <div>{${query}}</div> ...` },
+    { file: 'hello.pdf', line: 12, text: `... const [${query}, set${query}] = useState ...` },
+    { file: 'world.pdf', line: 45, text: `... return <div>{${query}}</div> ...` },
   ] : [];
 
   return (
@@ -61,7 +61,7 @@ export default function SearchPanel() {
               <div className={`flex items-center h-7 px-2 font-bold ${colors.hover} cursor-pointer`}>
                 <ChevronDown size={14} className="mr-1" />
                 <FileText size={14} className="mr-2 text-blue-400" />
-                <span>App.tsx</span>
+                <span>hello.pdf</span>
               </div>
 
               {/* Satır Sonuçları */}
