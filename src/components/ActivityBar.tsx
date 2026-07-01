@@ -2,8 +2,8 @@ import { Files, Search, Settings } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 
 interface Props {
-  activePanel: 'explorer' | null;
-  setActivePanel: (panel: 'explorer' | null) => void;
+  activePanel: 'explorer' |  'search' | null;
+  setActivePanel: (panel: 'explorer' | 'search' | null) => void;
 }
 
 export default function ActivityBar({ activePanel, setActivePanel }: Props) {
@@ -14,15 +14,22 @@ export default function ActivityBar({ activePanel, setActivePanel }: Props) {
       <IconBtn active={activePanel === 'explorer'} onClick={() => setActivePanel(activePanel ? null : 'explorer')}>
         <Files size={24} />
       </IconBtn>
-      <IconBtn active={false}><Search size={24} /></IconBtn>
-      
+      <IconBtn active={activePanel === 'search'} onClick={() => setActivePanel(activePanel ? null : 'search')}>
+        <Search size={24} />
+      </IconBtn>
       <div className="flex-1" />
       
       <IconBtn active={false}><Settings size={24} /></IconBtn>
     </nav>
   );
 }
-function IconBtn({ children, active, onClick }: any) {
+interface IconBtnProps {
+  children: React.ReactNode;
+  active: boolean;
+  onClick?: () => void;
+}
+
+function IconBtn({ children, active, onClick }: IconBtnProps) {
   const { colors } = useTheme();
   return (
     <button

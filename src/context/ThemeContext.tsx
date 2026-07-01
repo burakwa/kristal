@@ -12,7 +12,13 @@ const getColors = (isDark: boolean) => ({
   iconInactive: 'opacity-40 hover:opacity-100 transition-opacity',
 });
 
-const ThemeContext = createContext<any>(null);
+interface ThemeContextType {
+  isDark: boolean;
+  toggleTheme: () => void;
+  colors: ReturnType<typeof getColors>;
+}
+
+const ThemeContext = createContext<ThemeContextType | null>(null);
 
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
   const [isDark, setIsDark] = useState(true);
@@ -26,4 +32,11 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
-export const useTheme = () => useContext(ThemeContext);
+// eslint-disable-next-line react-refresh/only-export-components
+export const useTheme = () => {
+  const context = useContext(ThemeContext);
+  if (!context) {
+    throw new Error('useTheme must be used within a ThemeProvider');
+  }
+  return context;
+};

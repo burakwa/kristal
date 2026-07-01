@@ -7,7 +7,8 @@ import EditorArea from './components/EditorArea';
 import StatusBar from './components/StatusBar';
 
 function App() {
-  const [activePanel, setActivePanel] = useState<'explorer' | null>('explorer');
+  const [activePanel, setActivePanel] = useState<'explorer' | 'search' | null>('explorer');
+  
 
   return (
     <ThemeProvider>
@@ -16,7 +17,12 @@ function App() {
   );
 }
 
-function MainLayout({ activePanel, setActivePanel }: any) {
+interface MainLayoutProps {
+  activePanel: 'explorer' | 'search' | null;
+  setActivePanel: (panel: 'explorer' | 'search' | null) => void;
+}
+
+function MainLayout({ activePanel, setActivePanel }: MainLayoutProps) {
   const { colors } = useTheme();
 
   return (
@@ -24,7 +30,7 @@ function MainLayout({ activePanel, setActivePanel }: any) {
       <TitleBar />
       <main className="flex flex-1 overflow-hidden">
         <ActivityBar activePanel={activePanel} setActivePanel={setActivePanel} />
-        {activePanel && <SideBar />}
+        {activePanel && <SideBar activePanel={activePanel} />}
         <EditorArea />
       </main>
       <StatusBar />

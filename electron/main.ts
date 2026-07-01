@@ -1,9 +1,7 @@
-import { app, BrowserWindow } from 'electron'
-import { createRequire } from 'node:module'
+import { app, BrowserWindow, ipcMain } from 'electron'
 import { fileURLToPath } from 'node:url'
 import path from 'node:path'
 
-const require = createRequire(import.meta.url)
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 // The built directory structure
@@ -29,6 +27,7 @@ let win: BrowserWindow | null
 function createWindow() {
   win = new BrowserWindow({
     icon: path.join(process.env.VITE_PUBLIC, 'electron-vite.svg'),
+    frame: false,
     webPreferences: {
       preload: path.join(__dirname, 'preload.mjs'),
     },
@@ -46,6 +45,25 @@ function createWindow() {
     win.loadFile(path.join(RENDERER_DIST, 'index.html'))
   }
 }
+
+// Window Control IPC Handlers
+ipcMain.handle('window:minimize', () => {
+  if (win) win.minimize()
+})
+
+ipcMain.handle('window:maximize', () => {
+  if (win) {
+    if (win.isMaximized()) {
+      win.unmaximize()
+    } else {
+      win.maximize()
+    }
+  }
+})
+
+ipcMain.handle('window:close', () => {
+  if (win) win.close()
+})
 
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits
