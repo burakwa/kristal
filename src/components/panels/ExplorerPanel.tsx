@@ -8,9 +8,9 @@ export default function ExplorerPanel() {
         Explorer
       </div>
       <div className="flex-1 overflow-y-auto text-[13px] p-1">
-        <FileItem name="src" icon={<Folder size={14} className="text-yellow-500" />} />
-        <FileItem name="App.tsx" icon={<FileText size={14} className="text-blue-400" />} indent />
-        <FileItem name="package.json" icon={<FileText size={14} className="text-green-400" />} />
+        <FileItem name="file" icon={<Folder size={14} className="text-yellow-500" />} />
+        <FileItem name="hello.pdf" icon={<FileText size={14} className="text-red-400" />} indent />
+        <FileItem name="world.pdf" icon={<FileText size={14} className="text-red-400" />} />
       </div>
     </>
   );
