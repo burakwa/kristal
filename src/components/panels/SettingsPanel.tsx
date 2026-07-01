@@ -14,7 +14,7 @@ export default function SettingsPanel() {
       </div>
 
       <div className="p-3 flex flex-col gap-4 text-[13px]">
-        <div className="rounded border p-3 space-y-3 ${colors.border} ${colors.bg}">
+        <div className={`rounded border p-3 space-y-3 ${colors.border} ${colors.bg}`}>
           <div className="flex items-center gap-2 text-sm font-semibold text-sky-500">
             <SlidersHorizontal size={16} />
             Genel Ayarlar

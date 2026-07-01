@@ -7,8 +7,7 @@ import EditorArea from './components/EditorArea';
 import StatusBar from './components/StatusBar';
 
 function App() {
-  const [activePanel, setActivePanel] = useState<'explorer' | 'search' | null>('explorer');
-  
+  const [activePanel, setActivePanel] = useState<'explorer' | 'search' | 'settings' | null>('explorer');
 
   return (
     <ThemeProvider>
@@ -18,8 +17,8 @@ function App() {
 }
 
 interface MainLayoutProps {
-  activePanel: 'explorer' | 'search' | null;
-  setActivePanel: (panel: 'explorer' | 'search' | null) => void;
+  activePanel: 'explorer' | 'search' | 'settings' | null;
+  setActivePanel: (panel: 'explorer' | 'search' | 'settings' | null) => void;
 }
 
 function MainLayout({ activePanel, setActivePanel }: MainLayoutProps) {
