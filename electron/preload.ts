@@ -1,7 +1,15 @@
 import { ipcRenderer, contextBridge } from 'electron'
 
+// --------- Type definition for ipcRenderer ---------
+export type IpcRendererAPI = {
+  on: (channel: string, listener: (...args: any[]) => void) => any;
+  off: (channel: string, listener: (...args: any[]) => void) => any;
+  send: (channel: string, ...args: any[]) => void;
+  invoke: (channel: string, ...args: any[]) => Promise<any>;
+}
+
 // --------- Expose some API to the Renderer process ---------
-contextBridge.exposeInMainWorld('ipcRenderer', {
+const ipcRendererAPI: IpcRendererAPI = {
   on(...args: Parameters<typeof ipcRenderer.on>) {
     const [channel, listener] = args
     return ipcRenderer.on(channel, (event, ...args) => listener(event, ...args))
@@ -18,7 +26,6 @@ contextBridge.exposeInMainWorld('ipcRenderer', {
     const [channel, ...omit] = args
     return ipcRenderer.invoke(channel, ...omit)
   },
+}
 
-  // You can expose other APTs you need here.
-  // ...
-})
+contextBridge.exposeInMainWorld('ipcRenderer', ipcRendererAPI)

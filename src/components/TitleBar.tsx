@@ -1,11 +1,10 @@
 import { Sun, Moon, Minus, Square, X } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
+import type { IpcRendererAPI } from '../../electron/preload';
 
 declare global {
   interface Window {
-    ipcRenderer?: {  // ? ile optional yap
-      invoke: (channel: string) => Promise<void>;
-    };
+    ipcRenderer?: IpcRendererAPI;
   }
 }
 
@@ -18,7 +17,14 @@ export default function TitleBar() {
   const { isDark, toggleTheme, colors } = useTheme();
 
   const handleWindowAction = async (action: string) => {
-    await window.ipcRenderer?.invoke(`window:${action}`).catch(console.error);
+    try {
+      const win = window as any;
+      if (win.ipcRenderer?.invoke) {
+        await win.ipcRenderer.invoke(`window:${action}`);
+      }
+    } catch (error) {
+      console.error('Window action error:', error);
+    }
   };
 
   const dragStyle: AppRegionStyle = { WebkitAppRegion: 'drag' };
@@ -58,7 +64,7 @@ export default function TitleBar() {
         
         <button 
           onClick={() => handleWindowAction('close')} 
-          className={`p-1.5 rounded ${colors.hover} transition-colors hover:!bg-red-500/20 hover:!text-red-400`}
+          className={`p-1.5 rounded ${colors.hover} transition-colors`}
           aria-label="Kapat"
         >
           <X size={16} />
