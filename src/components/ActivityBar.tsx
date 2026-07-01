@@ -2,8 +2,8 @@ import { Files, Search, Settings } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 
 interface Props {
-  activePanel: 'explorer' |  'search' | null;
-  setActivePanel: (panel: 'explorer' | 'search' | null) => void;
+  activePanel: 'explorer' | 'search' | 'settings' | null;
+  setActivePanel: (panel: 'explorer' | 'search' | 'settings' | null) => void;
 }
 
 export default function ActivityBar({ activePanel, setActivePanel }: Props) {
@@ -11,15 +11,17 @@ export default function ActivityBar({ activePanel, setActivePanel }: Props) {
 
   return (
     <nav className={`w-12 flex flex-col items-center py-2 ${colors.activityBar}`}>
-      <IconBtn active={activePanel === 'explorer'} onClick={() => setActivePanel(activePanel ? null : 'explorer')}>
+      <IconBtn active={activePanel === 'explorer'} onClick={() => setActivePanel(activePanel === 'explorer' ? null : 'explorer')}>
         <Files size={24} />
       </IconBtn>
-      <IconBtn active={activePanel === 'search'} onClick={() => setActivePanel(activePanel ? null : 'search')}>
+      <IconBtn active={activePanel === 'search'} onClick={() => setActivePanel(activePanel === 'search' ? null : 'search')}>
         <Search size={24} />
       </IconBtn>
       <div className="flex-1" />
       
-      <IconBtn active={false}><Settings size={24} /></IconBtn>
+      <IconBtn active={activePanel === 'settings'} onClick={() => setActivePanel(activePanel === 'settings' ? null : 'settings')}>
+        <Settings size={24} />
+      </IconBtn>
     </nav>
   );
 }
