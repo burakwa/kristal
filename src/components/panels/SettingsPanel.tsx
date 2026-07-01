@@ -35,32 +35,35 @@ export default function SettingsPanel() {
           </div>
 
           <div className="flex items-center justify-between gap-4">
-            <label className="flex items-center gap-3 cursor-pointer">
-              <input
-                type="checkbox"
-                checked={showLineNumbers}
-                onChange={() => setShowLineNumbers(!showLineNumbers)}
-                className="form-checkbox h-4 w-4 rounded"
-              />
-              <span>Satır numaralarını göster</span>
-            </label>
-            <span className="text-[12px] opacity-70">PDF görüntüleme için.</span>
+            <div>
+              <div className="font-medium">Satır numaralarını göster</div>
+              <div className="text-[12px] opacity-70">PDF görüntüleme için.</div>
+            </div>
+            <ToggleSwitch checked={showLineNumbers} onChange={() => setShowLineNumbers(!showLineNumbers)} />
           </div>
 
           <div className="flex items-center justify-between gap-4">
-            <label className="flex items-center gap-3 cursor-pointer">
-              <input
-                type="checkbox"
-                checked={autoSave}
-                onChange={() => setAutoSave(!autoSave)}
-                className="form-checkbox h-4 w-4 rounded"
-              />
-              <span>Otomatik kaydet</span>
-            </label>
-            <span className="text-[12px] opacity-70">Yapılan değişiklikleri otomatik kaydeder.</span>
+            <div>
+              <div className="font-medium">Otomatik kaydet</div>
+              <div className="text-[12px] opacity-70">Yapılan değişiklikleri otomatik kaydeder.</div>
+            </div>
+            <ToggleSwitch checked={autoSave} onChange={() => setAutoSave(!autoSave)} />
           </div>
         </div>
       </div>
     </>
+  );
+}
+
+function ToggleSwitch({ checked, onChange }: { checked: boolean; onChange: () => void }) {
+  return (
+    <button
+      type="button"
+      onClick={onChange}
+      className={`relative inline-flex h-7 w-12 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-sky-500 ${checked ? 'bg-sky-500' : 'bg-slate-300'}`}
+      aria-pressed={checked}
+    >
+      <span className={`pointer-events-none inline-block h-6 w-6 transform rounded-full bg-white shadow transition duration-200 ${checked ? 'translate-x-5' : 'translate-x-0'}`} />
+    </button>
   );
 }
