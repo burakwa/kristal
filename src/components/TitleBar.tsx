@@ -3,8 +3,8 @@ import { useTheme } from '../context/ThemeContext';
 import type { IpcRendererAPI } from '../../electron/preload';
 
 declare global {
-  interface Window {
-    ipcRenderer?: IpcRendererAPI;
+  interface Window  {
+    ipcRenderer ?: IpcRendererAPI;
   }
 }
 
@@ -35,7 +35,7 @@ export default function TitleBar() {
       className={`h-10 flex items-center justify-between px-4 ${colors.titleBar} border-b ${colors.border}`}
       style={dragStyle}
     >
-      <span className="text-sm font-medium opacity-80 select-none">My PDF IDE</span>
+      <span className="text-sm font-medium opacity-80 select-none">Kristal</span>
       
       <div className="flex items-center gap-2" style={noDragStyle}>
         <button 
