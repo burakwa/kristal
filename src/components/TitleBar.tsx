@@ -1,5 +1,6 @@
 import { Sun, Moon, Minus, Square, X } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
+import TopMenu from './TopMenu';
 import type { IpcRendererAPI } from '../../electron/preload';
 
 declare global {
@@ -8,7 +9,6 @@ declare global {
   }
 }
 
-// Daha temiz tip yöntemi
 type AppRegionStyle = React.CSSProperties & {
   WebkitAppRegion?: 'drag' | 'no-drag';
 };
@@ -31,12 +31,22 @@ export default function TitleBar() {
   const noDragStyle: AppRegionStyle = { WebkitAppRegion: 'no-drag' };
 
   return (
+    // relative ve z-50 ekleyerek menünün alt katmanların arkasında kalmasını önlüyoruz
     <header
-      className={`h-10 flex items-center justify-between px-4 ${colors.titleBar} border-b ${colors.border}`}
+      className={`h-10 flex items-center justify-between px-4 ${colors.titleBar} border-b ${colors.border} relative z-50`}
       style={dragStyle}
     >
-      <span className="text-sm font-medium opacity-80 select-none">Kristal</span>
+      {/* KRİTİK DÜZELTME: Menüyü içeren bu div'e style={noDragStyle} verdik. 
+        Böylece "Dosya" butonuna tıklanabilir, uygulamanın boş yerlerinden ise pencere sürüklenebilir.
+      */}
+      <div className="flex items-center gap-4 relative" style={noDragStyle}>
+        <span className="text-sm font-medium opacity-80 select-none pointer-events-none">
+          Kristal
+        </span>
+        <TopMenu onOpen={() => {}} onSave={() => {}} onSettings={() => {}} />
+      </div>
       
+      {/* Sağ taraftaki butonlar zaten no-drag altındaydı, burası doğru */}
       <div className="flex items-center gap-2" style={noDragStyle}>
         <button 
           onClick={toggleTheme} 

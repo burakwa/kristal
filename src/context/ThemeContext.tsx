@@ -10,6 +10,9 @@ const getColors = (isDark: boolean) => ({
   hover: isDark ? 'hover:bg-white/10' : 'hover:bg-black/5',
   iconActive: isDark ? 'text-[#38bdf8]' : 'text-[#0284c7]', 
   iconInactive: 'opacity-40 hover:opacity-100 transition-opacity',
+  menuBg: 'bg-white border-neutral-200 text-neutral-800', 
+  menuActive: 'bg-neutral-100',
+  menuBorder: 'border-neutral-200'
 });
 
 interface ThemeContextType {
