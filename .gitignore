@@ -10,7 +10,16 @@ lerna-debug.log*
 node_modules
 dist
 dist-ssr
+dist-electron
 *.local
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Electron build output
+out/
 
 # Editor directories and files
 .vscode/*
@@ -22,3 +31,12 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# OS files
+Thumbs.db
+*.pdb
+
+# Package manager lock files (optional - uncomment if you want to commit them)
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
