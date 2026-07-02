@@ -6,12 +6,10 @@ import { useTheme } from '../context/ThemeContext';
 import { usePdf } from '../context/PdfContext';
 import AnnotationLayer from './AnnotationLayer';
 
-// PDF.js worker ayarı
-pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-  'pdfjs-dist/build/pdf.worker.min.mjs',
-  import.meta.url,
-).toString();
+import pdfWorkerSrc from 'pdfjs-dist/build/pdf.worker.min.mjs?url';
 
+// PDF.js worker ayarı
+pdfjs.GlobalWorkerOptions.workerSrc = pdfWorkerSrc;
 export default function PdfViewer() {
   const { colors, isDark } = useTheme();
   const { activeFile, zoom, setTotalPages, goToPage } = usePdf();
@@ -58,8 +56,9 @@ export default function PdfViewer() {
       onScroll={handleScroll}
     >
       <Document
-        file={{ data: activeFile.data }}
+        file={activeFile.url}
         onLoadSuccess={onDocumentLoadSuccess}
+        onLoadError={(error) => console.error('PDF load error:', error)}
         loading={
           <div className="flex items-center justify-center h-full">
             <div className="flex flex-col items-center gap-3">
