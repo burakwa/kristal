@@ -5,12 +5,10 @@ import 'react-pdf/dist/Page/TextLayer.css';
 import { useTheme } from '../context/ThemeContext';
 import { usePdf } from '../context/PdfContext';
 import AnnotationLayer from './AnnotationLayer';
+import workerSrc from 'pdfjs-dist/build/pdf.worker.min.mjs?url';
 
 // PDF.js worker ayarı
-pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-  'pdfjs-dist/build/pdf.worker.min.mjs',
-  import.meta.url,
-).toString();
+pdfjs.GlobalWorkerOptions.workerSrc = workerSrc;
 
 export default function PdfViewer() {
   const { colors, isDark } = useTheme();

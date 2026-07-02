@@ -4,14 +4,8 @@ import { useTheme } from '../context/ThemeContext';
 import { usePdf } from '../context/PdfContext';
 import { savePdfWithAnnotations } from '../utils/pdfUtils';
 import TopMenu from './TopMenu';
-import type { IpcRendererAPI } from '../../electron/preload';
 import logo from "../assets/logo.png"
 
-declare global {
-  interface Window  {
-    ipcRenderer ?: IpcRendererAPI;
-  }
-}
 
 type AppRegionStyle = React.CSSProperties & {
   WebkitAppRegion?: 'drag' | 'no-drag';
@@ -73,14 +67,14 @@ export default function TitleBar() {
       const win = window as any;
       if (win.ipcRenderer?.invoke) {
         await win.ipcRenderer.invoke('dialog:saveFile', {
-          data: Array.from(result),
+          data: result,
           name: activeFile.name,
         });
         return;
       }
 
       // Browser fallback
-      const blob = new Blob([result], { type: 'application/pdf' });
+      const blob = new Blob([result as any], { type: 'application/pdf' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;

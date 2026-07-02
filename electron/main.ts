@@ -91,13 +91,13 @@ ipcMain.handle('dialog:openFile', async () => {
 
   return {
     name,
-    data: Array.from(new Uint8Array(data)),
+    data: new Uint8Array(data),
     path: filePath,
   }
 })
 
 // PDF dosyası kaydetme diyalogu
-ipcMain.handle('dialog:saveFile', async (_event, payload: { data: number[]; name: string }) => {
+ipcMain.handle('dialog:saveFile', async (_event, payload: { data: Uint8Array; name: string }) => {
   if (!win) return false
 
   const result = await dialog.showSaveDialog(win, {
@@ -112,7 +112,7 @@ ipcMain.handle('dialog:saveFile', async (_event, payload: { data: number[]; name
     return false
   }
 
-  const buffer = Buffer.from(new Uint8Array(payload.data))
+  const buffer = Buffer.from(payload.data)
   fs.writeFileSync(result.filePath, buffer)
   return true
 })

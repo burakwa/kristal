@@ -93,7 +93,7 @@ export function PdfProvider({ children }: { children: ReactNode }) {
 
   // ─── File operations ────────────────────────────
   const openFile = useCallback((name: string, data: Uint8Array) => {
-    const blob = new Blob([data], { type: 'application/pdf' });
+    const blob = new Blob([data as any], { type: 'application/pdf' });
     const url = URL.createObjectURL(blob);
     const id = generateId();
 

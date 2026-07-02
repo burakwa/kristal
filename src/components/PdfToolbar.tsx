@@ -32,7 +32,7 @@ export default function PdfToolbar() {
     if (!activeFile) return;
     try {
       const result = await savePdfWithAnnotations(activeFile.data, activeFile.annotations);
-      const blob = new Blob([result.buffer], { type: 'application/pdf' });
+      const blob = new Blob([result as any], { type: 'application/pdf' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
