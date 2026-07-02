@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { ThemeProvider , useTheme } from './context/ThemeContext';
+import { ThemeProvider, useTheme } from './context/ThemeContext';
+import { PdfProvider } from './context/PdfContext';
 import TitleBar from './components/TitleBar';
 import ActivityBar from './components/ActivityBar';
 import SideBar from './components/SideBar';
@@ -11,7 +12,9 @@ function App() {
 
   return (
     <ThemeProvider>
-      <MainLayout activePanel={activePanel} setActivePanel={setActivePanel} />
+      <PdfProvider>
+        <MainLayout activePanel={activePanel} setActivePanel={setActivePanel} />
+      </PdfProvider>
     </ThemeProvider>
   );
 }
