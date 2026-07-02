@@ -2,6 +2,7 @@ import { Sun, Moon, Minus, Square, X } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import TopMenu from './TopMenu';
 import type { IpcRendererAPI } from '../../electron/preload';
+import logo from "../assets/logo.png"
 
 declare global {
   interface Window  {
@@ -30,23 +31,27 @@ export default function TitleBar() {
   const dragStyle: AppRegionStyle = { WebkitAppRegion: 'drag' };
   const noDragStyle: AppRegionStyle = { WebkitAppRegion: 'no-drag' };
 
-  return (
+return (
     // relative ve z-50 ekleyerek menünün alt katmanların arkasında kalmasını önlüyoruz
+    // px-4 yerine pl-2 pr-4 yaparak logoyu en sola yaklaştırdık
     <header
-      className={`h-10 flex items-center justify-between px-4 ${colors.titleBar} border-b ${colors.border} relative z-50`}
+      className={`h-9 flex items-center justify-between pl-2 pr-4 ${colors.titleBar} border-b ${colors.border} relative z-50`}
       style={dragStyle}
     >
-      {/* KRİTİK DÜZELTME: Menüyü içeren bu div'e style={noDragStyle} verdik. 
-        Böylece "Dosya" butonuna tıklanabilir, uygulamanın boş yerlerinden ise pencere sürüklenebilir.
-      */}
-      <div className="flex items-center gap-4 relative" style={noDragStyle}>
-        <span className="text-sm font-medium opacity-80 select-none pointer-events-none">
-          Kristal
-        </span>
+      {/* Sol Taraf: Logo ve TopMenu yan yana */}
+      <div className="flex items-center gap-2 relative" style={noDragStyle}>
+        <img
+          src={logo}
+          alt="Logo"
+          // h-5 (20px) veya h-6 (24px) idealdir. h-10 olan header içinde taşma yapmaz.
+          className="h-5 w-auto object-contain select-none pointer-events-none shrink-0"
+          draggable={false}
+        />
+        
         <TopMenu onOpen={() => {}} onSave={() => {}} onSettings={() => {}} />
       </div>
       
-      {/* Sağ taraftaki butonlar zaten no-drag altındaydı, burası doğru */}
+      {/* Sağ taraftaki butonlar */}
       <div className="flex items-center gap-2" style={noDragStyle}>
         <button 
           onClick={toggleTheme} 
