@@ -59,7 +59,7 @@ ipcMain.handle("dialog:openFile", async () => {
   const name = path.basename(filePath);
   return {
     name,
-    data: Array.from(new Uint8Array(data)),
+    data: new Uint8Array(data),
     path: filePath
   };
 });
@@ -75,7 +75,7 @@ ipcMain.handle("dialog:saveFile", async (_event, payload) => {
   if (result.canceled || !result.filePath) {
     return false;
   }
-  const buffer = Buffer.from(new Uint8Array(payload.data));
+  const buffer = Buffer.from(payload.data);
   fs.writeFileSync(result.filePath, buffer);
   return true;
 });

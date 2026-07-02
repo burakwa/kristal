@@ -5,10 +5,12 @@ import 'react-pdf/dist/Page/TextLayer.css';
 import { useTheme } from '../context/ThemeContext';
 import { usePdf } from '../context/PdfContext';
 import AnnotationLayer from './AnnotationLayer';
-import workerSrc from 'pdfjs-dist/build/pdf.worker.min.mjs?url';
 
 // PDF.js worker ayarı
-pdfjs.GlobalWorkerOptions.workerSrc = workerSrc;
+pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+  'pdfjs-dist/build/pdf.worker.min.mjs',
+  import.meta.url,
+).toString();
 
 export default function PdfViewer() {
   const { colors, isDark } = useTheme();
@@ -56,7 +58,7 @@ export default function PdfViewer() {
       onScroll={handleScroll}
     >
       <Document
-        file={activeFile.url}
+        file={{ data: activeFile.data }}
         onLoadSuccess={onDocumentLoadSuccess}
         loading={
           <div className="flex items-center justify-center h-full">
