@@ -1,6 +1,6 @@
-import { useState, useCallback, useRef } from 'react';
+import { useState } from 'react';
 import { ThemeProvider, useTheme } from './context/ThemeContext';
-import { PdfProvider, usePdf } from './context/PdfContext';
+import { PdfProvider } from './context/PdfContext';
 import TitleBar from './components/TitleBar';
 import ActivityBar from './components/ActivityBar';
 import SideBar from './components/SideBar';

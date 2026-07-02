@@ -1,13 +1,13 @@
 import { useCallback, useRef, useState } from 'react';
-import { FileUp, FileText, X, GripHorizontal } from 'lucide-react';
+import { FileUp, FileText, X } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import { usePdf } from '../context/PdfContext';
 import PdfViewer from './PdfViewer';
 import PdfToolbar from './PdfToolbar';
 
 export default function EditorArea() {
-  const { colors, isDark } = useTheme();
-  const { files, activeFileId, activeFile, switchFile, closeFile, openFile } = usePdf();
+  const { isDark } = useTheme();
+  const { files, activeFileId, switchFile, closeFile, openFile } = usePdf();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isDragOver, setIsDragOver] = useState(false);
 
@@ -116,7 +116,6 @@ export default function EditorArea() {
               </div>
               {isDragOver && (
                 <div className="absolute inset-0 rounded-2xl ring-2 ring-sky-500 ring-offset-2 animate-pulse"
-                  style={{ ringOffsetColor: isDark ? '#1a1f26' : '#fcfbfa' }}
                 />
               )}
             </div>

@@ -1,7 +1,7 @@
 import {
   MousePointer2, Type, Pen, Highlighter, Eraser,
   ZoomIn, ZoomOut, RotateCcw, ChevronLeft, ChevronRight,
-  Undo2, Maximize2, Download
+  Undo2, Download
 } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import { usePdf, type ToolType } from '../context/PdfContext';
@@ -22,7 +22,7 @@ const colorPresets = [
 ];
 
 export default function PdfToolbar() {
-  const { colors, isDark } = useTheme();
+  const { isDark } = useTheme();
   const {
     activeFile, tool, setTool, toolColor, setToolColor, toolSize, setToolSize,
     zoom, zoomIn, zoomOut, zoomReset, goToPage, undoAnnotation,
@@ -32,7 +32,7 @@ export default function PdfToolbar() {
     if (!activeFile) return;
     try {
       const result = await savePdfWithAnnotations(activeFile.data, activeFile.annotations);
-      const blob = new Blob([result], { type: 'application/pdf' });
+      const blob = new Blob([result.buffer], { type: 'application/pdf' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
@@ -84,7 +84,6 @@ export default function PdfToolbar() {
                 }`}
                 style={{
                   backgroundColor: color,
-                  ringOffset: isDark ? '#1a1f26' : '#f7f5f0',
                 }}
               />
             ))}

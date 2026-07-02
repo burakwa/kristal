@@ -1,5 +1,5 @@
 import { useState, useRef, useCallback, useEffect } from 'react';
-import { useTheme } from '../context/ThemeContext';
+
 import { usePdf, type Annotation } from '../context/PdfContext';
 
 interface Props {
@@ -8,8 +8,7 @@ interface Props {
   pageHeight: number;
 }
 
-export default function AnnotationLayer({ pageIndex, pageWidth, pageHeight }: Props) {
-  const { colors } = useTheme();
+export default function AnnotationLayer({ pageIndex, pageWidth, pageHeight: _pageHeight }: Props) {
   const {
     tool, toolColor, toolSize,
     activeFile, addAnnotation, removeAnnotation, updateAnnotation,
@@ -56,12 +55,7 @@ export default function AnnotationLayer({ pageIndex, pageWidth, pageHeight }: Pr
         color: toolColor,
       };
       addAnnotation(ann);
-      // We'll find it in the next render and focus
-      setTimeout(() => {
-        const anns = activeFile?.annotations ?? [];
-        const last = anns[anns.length - 1];
-        // actually we need the NEW one, it will be in the next render
-      }, 0);
+      // Auto-focus will happen via useEffect below
       return;
     }
 
